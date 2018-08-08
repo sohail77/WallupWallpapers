@@ -46,6 +46,40 @@
 
             </LinearLayout>
 
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:background="#88000000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="4dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Curated Collections"
+                    android:textStyle="bold"
+                    android:layout_margin="4dp"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/black"
+                    />
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/curatedCollectionrv"
+                    android:layout_margin="4dp"
+                    >
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+
             <View
                 android:layout_width="100dp"
                 android:layout_height="2dp"

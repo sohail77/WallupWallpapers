@@ -7,6 +7,11 @@ public class FeaturedCollectionModel {
     @SerializedName("title") private String title;
     @SerializedName("user") private User user;
     @SerializedName("cover_photo") private CoverPhoto coverPhoto;
+    @SerializedName("curated") private boolean isCurated;
+
+    public boolean isCurated() {
+        return isCurated;
+    }
 
     public int getId() {
         return id;

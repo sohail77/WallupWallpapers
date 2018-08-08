@@ -1,7 +1,13 @@
 package com.sohail.wallupwallpapers.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.sohail.wallupwallpapers.Activities.ImageViewerActivity;
+import com.sohail.wallupwallpapers.Activities.InfiniteScrollerActivity;
 import com.sohail.wallupwallpapers.Models.PhotoModel;
 import com.sohail.wallupwallpapers.R;
 
@@ -44,24 +52,43 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof FooterViewHolder){
             FooterViewHolder footerViewHolder=(FooterViewHolder)holder;
             footerViewHolder.footerText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "You clicked at Footer View", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(context, InfiniteScrollerActivity.class);
+                    intent.putExtra("history",1);
+                    context.startActivity(intent);
 
                 }
             });
 
         }else {
-            Recent_photo_holder recent_photo_holder=(Recent_photo_holder) holder;
+            final Recent_photo_holder recent_photo_holder=(Recent_photo_holder) holder;
             PhotoModel photo=recentPhotos.get(position);
             Glide.with(context)
                     .load(photo.getUrls().getImage_regular())
                     .centerCrop()
                     .into(((Recent_photo_holder) holder).recentImg);
+
+            recent_photo_holder.recentImg.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onClick(View view) {
+                    Intent i=new Intent(context, ImageViewerActivity.class);
+                    i.putExtra("profileImage",recentPhotos.get(position).getUser().getProfileImage().getImage_large());
+                    i.putExtra("Image",recentPhotos.get(position).getUrls().getImage_raw());
+                    i.putExtra("likes",recentPhotos.get(position).getLikes());
+                    i.putExtra("usrname",recentPhotos.get(position).getUser().getName());
+                    i.putExtra("location",recentPhotos.get(position).getUser().getLocation());
+                    recent_photo_holder.recentImg.setTransitionName("sharedTransition");
+                    Pair<View,String> pair=Pair.create((View)recent_photo_holder.recentImg,recent_photo_holder.recentImg.getTransitionName());
+                    ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,pair);
+                    context.startActivity(i,optionsCompat.toBundle());
+                }
+            });
         }
     }
 

@@ -1,5 +1,6 @@
 package com.sohail.wallupwallpapers;
 
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +36,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.github.florent37.expectanim.core.Expectations.alpha;
-import static com.github.florent37.expectanim.core.Expectations.bottomOfParent;
 import static com.github.florent37.expectanim.core.Expectations.height;
 import static com.github.florent37.expectanim.core.Expectations.leftOfParent;
 import static com.github.florent37.expectanim.core.Expectations.scale;
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     private GridLayoutManager gridLayoutManager;
     private InfiniteScrollListener infiniteScrollListener;
     RecyclerView recyclerView;
-    RecyclerView featured_collection_rv;
-    Featured_collection_adapter featured_collection_adapter;
+    RecyclerView featured_collection_rv,curated_collection_rv;
+    Featured_collection_adapter featured_collection_adapter,curated_collection_adapter;
     MaterialSearchBar searchBar;
     ImageView backgroundImg;
 
@@ -86,9 +86,12 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(gridLayoutManager);
-
+        ViewCompat.setNestedScrollingEnabled(recyclerView,false);
         featured_collection_rv=(RecyclerView)findViewById(R.id.featuredCollectionrv);
         featured_collection_rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        curated_collection_rv=(RecyclerView)findViewById(R.id.curatedCollectionrv);
+        curated_collection_rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
         searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         searchBar.setOnSearchActionListener(this);
@@ -109,18 +112,19 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
                 .expect(scrim)
                 .toBe(
-                        height(0)
+                        alpha(0f)
                 )
 
                 .expect(mainTxt)
                 .toBe(
-                        height(0)
+                        alpha(0f)
                 )
 
 
                 .expect(backgroundImg)
                 .toBe(
-                        height(0)
+                        alpha(0f)
+
                 )
 
                 .expect(backbground)
@@ -145,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             @Override
             public void onResponse(Call<List<PhotoModel>> call, Response<List<PhotoModel>> response) {
                 List<PhotoModel> photoModelList=response.body();
-                    adapter = new Recent_photo_adapter(getApplicationContext(), photoModelList);
+                    adapter = new Recent_photo_adapter(MainActivity.this, photoModelList);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
 
@@ -176,6 +180,24 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                 featured_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
                 featured_collection_adapter.notifyDataSetChanged();
                 featured_collection_rv.setAdapter(featured_collection_adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
+
+            }
+        });
+
+        //CURATED COLLECTIONS FIRST FETCH
+        UnsplashService curated_collection_service=ApiClient.getClient().create(UnsplashService.class);
+        Call<List<FeaturedCollectionModel>> call_curated_collection=curated_collection_service.getCuratedCollections(API_KEY,1,20);
+        call_curated_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
+            @Override
+            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
+                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
+                curated_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
+                curated_collection_adapter.notifyDataSetChanged();
+                curated_collection_rv.setAdapter(curated_collection_adapter);
             }
 
             @Override
