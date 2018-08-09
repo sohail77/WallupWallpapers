@@ -1,5 +1,6 @@
 package com.sohail.wallupwallpapers;
 
+import android.content.Intent;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.florent37.expectanim.ExpectAnim;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.sohail.wallupwallpapers.Activities.InfiniteScrollerActivity;
 import com.sohail.wallupwallpapers.Adapters.Featured_collection_adapter;
 import com.sohail.wallupwallpapers.Adapters.Recent_photo_adapter;
 import com.sohail.wallupwallpapers.Api.ApiClient;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     Featured_collection_adapter featured_collection_adapter,curated_collection_adapter;
     MaterialSearchBar searchBar;
     ImageView backgroundImg;
+    TextView seeAllTxt,seeAllTxt2;
 
 
     @BindView(R.id.mainTxt)
@@ -95,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
         searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         searchBar.setOnSearchActionListener(this);
+
+        seeAllTxt=(TextView)findViewById(R.id.seeAllTxt);
+        seeAllTxt2=(TextView)findViewById(R.id.seeAllTxt2);
 
 
         Glide.with(getApplicationContext())
@@ -206,6 +212,24 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             }
         });
 
+        seeAllTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this, InfiniteScrollerActivity.class);
+                intent.putExtra("history",3);
+                startActivity(intent);
+            }
+        });
+
+        seeAllTxt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this, InfiniteScrollerActivity.class);
+                intent.putExtra("history",4);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void updatePhotos(int page){
@@ -234,6 +258,10 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     public void onSearchConfirmed(CharSequence text) {
         searchBar.clearSuggestions();
         Log.d("olllllllllllla", getClass().getSimpleName() + " text changed " + searchBar.getText());
+        Intent i=new Intent(MainActivity.this,InfiniteScrollerActivity.class);
+        i.putExtra("history",5);
+        i.putExtra("query",searchBar.getText());
+        startActivity(i);
     }
 
     @Override

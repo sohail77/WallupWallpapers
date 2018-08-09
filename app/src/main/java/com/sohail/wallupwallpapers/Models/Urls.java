@@ -7,6 +7,8 @@ public class Urls {
     @SerializedName("small") private String image_small;
     @SerializedName("raw") private String image_raw;
 
+
+
     public String getImage_regular() {
         return image_regular;
     }

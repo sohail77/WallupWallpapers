@@ -27,15 +27,33 @@
                 android:orientation="vertical"
                 android:layout_margin="4dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Featured Collections"
-                    android:textStyle="bold"
-                    android:layout_margin="4dp"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/black"
-                    />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Featured Collections"
+                        android:textStyle="bold"
+                        android:layout_margin="4dp"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/black"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See All"
+                        android:id="@+id/seeAllTxt"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:layout_margin="4dp"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -60,15 +78,35 @@
                 android:orientation="vertical"
                 android:layout_margin="4dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Curated Collections"
-                    android:textStyle="bold"
-                    android:layout_margin="4dp"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/black"
-                    />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Curated Collections"
+                        android:textStyle="bold"
+                        android:layout_margin="4dp"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/black"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See All"
+                        android:id="@+id/seeAllTxt2"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:layout_margin="4dp"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

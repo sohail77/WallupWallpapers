@@ -3,16 +3,23 @@ package com.sohail.wallupwallpapers.Activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.sohail.wallupwallpapers.Adapters.Featured_collection_adapter;
 import com.sohail.wallupwallpapers.Adapters.InfinitePhotoAdapter;
 import com.sohail.wallupwallpapers.Adapters.Recent_photo_adapter;
+import com.sohail.wallupwallpapers.Adapters.SearchResultAdapter;
 import com.sohail.wallupwallpapers.Api.ApiClient;
 import com.sohail.wallupwallpapers.Api.UnsplashService;
 import com.sohail.wallupwallpapers.MainActivity;
+import com.sohail.wallupwallpapers.Models.FeaturedCollectionModel;
 import com.sohail.wallupwallpapers.Models.PhotoModel;
+import com.sohail.wallupwallpapers.Models.ResultsArray;
+import com.sohail.wallupwallpapers.Models.SearchResultmodel;
 import com.sohail.wallupwallpapers.R;
 import com.sohail.wallupwallpapers.ScrollListener.InfiniteScrollListener;
 
@@ -33,6 +40,8 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
     RecyclerView infiniteRv;
     ImageView headerImg;
     InfinitePhotoAdapter adapter;
+    SearchResultAdapter searchResultAdapter;
+    Featured_collection_adapter featured_collection_adapter,curated_collection_adapter;
     boolean isCurated;
     int i,id;
 
@@ -60,23 +69,146 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 if(i==1)
                     updateRecentPhotos(page);
-                else
-                    updateCollectionPhotos(id,page);
-
-
+                else if(i==2) {
+                    isCurated = getIntent().getExtras().getBoolean("curated");
+                    updateCollectionPhotos(id, page,isCurated);
+                }
+                else if(i==3)
+                    updateFeaturedCollectionList(page);
+                else if(i==4)
+                    updateCuratedCollectionList(page);
+                else {
+                    String query=getIntent().getStringExtra("query");
+                    updateSearchLists(query,page);
+                }
             }
         };
 
         infiniteRv.addOnScrollListener(infiniteScrollListener);
+
         if(i==1){
             getFirstRecentPhotos();
-        }else {
+        }else if(i==2) {
             isCurated = getIntent().getExtras().getBoolean("curated");
-            if (!isCurated) {
-                getFirstCollectionPhotos(id);
-            }
-        }
+            getFirstCollectionPhotos(id,isCurated);
 
+        }else if(i==3){
+            getFirstFeaturedCollectionList();
+        }else if(i==4)
+            getFirstCuratedCollectionList();
+        else{
+            String query=getIntent().getStringExtra("query");
+            getFirstSearchPhotos(query);
+        }
+    }
+
+    private void updateSearchLists(String query, int page) {
+        UnsplashService searchService=ApiClient.getClient().create(UnsplashService.class);
+        Call<SearchResultmodel> callSearchItems=searchService.getSearchPhotos(API_KEY,query,page,PAGE_LIMIT);
+        callSearchItems.enqueue(new Callback<SearchResultmodel>() {
+            @Override
+            public void onResponse(Call<SearchResultmodel> call, Response<SearchResultmodel> response) {
+                List<ResultsArray> resultsArrays=response.body().getResults();
+                searchResultAdapter.addPhotos(resultsArrays);
+            }
+
+            @Override
+            public void onFailure(Call<SearchResultmodel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getFirstSearchPhotos(String query) {
+        UnsplashService searchService=ApiClient.getClient().create(UnsplashService.class);
+        Call<SearchResultmodel> callSearchItems=searchService.getSearchPhotos(API_KEY,query,1,PAGE_LIMIT);
+        callSearchItems.enqueue(new Callback<SearchResultmodel>() {
+            @Override
+            public void onResponse(Call<SearchResultmodel> call, Response<SearchResultmodel> response) {
+                List<ResultsArray> resultsArray=response.body().getResults();
+                searchResultAdapter = new SearchResultAdapter(InfiniteScrollerActivity.this, resultsArray);
+                searchResultAdapter.notifyDataSetChanged();
+                infiniteRv.setAdapter(searchResultAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<SearchResultmodel> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void getFirstCuratedCollectionList() {
+        UnsplashService curated_collection_service=ApiClient.getClient().create(UnsplashService.class);
+        Call<List<FeaturedCollectionModel>> call_curated_collection=curated_collection_service.getCuratedCollections(API_KEY,2,20);
+        call_curated_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
+            @Override
+            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
+                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
+                curated_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
+                curated_collection_adapter.notifyDataSetChanged();
+                infiniteRv.setAdapter(curated_collection_adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getFirstFeaturedCollectionList() {
+        UnsplashService featured_collection_service=ApiClient.getClient().create(UnsplashService.class);
+        Call<List<FeaturedCollectionModel>> call_featured_collection=featured_collection_service.getFeaturedCollections(API_KEY,2,20);
+        call_featured_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
+            @Override
+            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
+                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
+                featured_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
+                featured_collection_adapter.notifyDataSetChanged();
+                infiniteRv.setAdapter(featured_collection_adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void updateCuratedCollectionList(int page) {
+        UnsplashService curated_collection_service=ApiClient.getClient().create(UnsplashService.class);
+        Call<List<FeaturedCollectionModel>> call_curated_collection=curated_collection_service.getCuratedCollections(API_KEY,page,20);
+        call_curated_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
+            @Override
+            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
+                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
+                curated_collection_adapter.addCollections(featuredCollectionModelList);
+            }
+
+            @Override
+            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void updateFeaturedCollectionList(int page) {
+        UnsplashService featured_collection_service=ApiClient.getClient().create(UnsplashService.class);
+        Call<List<FeaturedCollectionModel>> call_featured_collection=featured_collection_service.getFeaturedCollections(API_KEY,page,20);
+        call_featured_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
+            @Override
+            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
+                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
+                featured_collection_adapter.addCollections(featuredCollectionModelList);
+            }
+
+            @Override
+            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
+
+            }
+        });
     }
 
 
@@ -102,9 +234,14 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
     }
 
 
-    private void getFirstCollectionPhotos(int id) {
+    private void getFirstCollectionPhotos(int id,boolean isCurated) {
         UnsplashService service= ApiClient.getClient().create(UnsplashService.class);
-        Call<List<PhotoModel>> call=service.getCollectionPhotos(id,API_KEY,1,PAGE_LIMIT);
+        Call<List<PhotoModel>> call;
+        if(!isCurated) {
+            call = service.getCollectionPhotos(id, API_KEY, 1, PAGE_LIMIT);
+        }else {
+            call = service.getCuratedCollectionPhotos(id, API_KEY, 1, PAGE_LIMIT);
+        }
         call.enqueue(new Callback<List<PhotoModel>>() {
             @Override
             public void onResponse(Call<List<PhotoModel>> call, Response<List<PhotoModel>> response) {
@@ -139,10 +276,14 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
         });
     }
 
-    private void updateCollectionPhotos(int id, int page) {
+    private void updateCollectionPhotos(int id, int page,boolean isCurated) {
         UnsplashService service= ApiClient.getClient().create(UnsplashService.class);
-        Call<List<PhotoModel>> call=service.getCollectionPhotos(id,API_KEY,page,PAGE_LIMIT);
-        call.enqueue(new Callback<List<PhotoModel>>() {
+        Call<List<PhotoModel>> call;
+        if(!isCurated) {
+            call = service.getCollectionPhotos(id, API_KEY, page, PAGE_LIMIT);
+        }else {
+            call = service.getCuratedCollectionPhotos(id, API_KEY, page, PAGE_LIMIT);
+        }        call.enqueue(new Callback<List<PhotoModel>>() {
             @Override
             public void onResponse(Call<List<PhotoModel>> call, Response<List<PhotoModel>> response) {
                 List<PhotoModel> photoModelList=response.body();

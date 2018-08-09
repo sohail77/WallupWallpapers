@@ -2,6 +2,7 @@ package com.sohail.wallupwallpapers.Api;
 
 import com.sohail.wallupwallpapers.Models.FeaturedCollectionModel;
 import com.sohail.wallupwallpapers.Models.PhotoModel;
+import com.sohail.wallupwallpapers.Models.SearchResultmodel;
 
 import java.util.List;
 
@@ -34,4 +35,16 @@ public interface UnsplashService {
                                                             @Query("client_id") String apiKey,
                                                               @Query("page") int page,
                                                               @Query("per_page") int per_page);
+
+    @GET("collections/curated/{id}/photos")
+    Call<List<PhotoModel>> getCuratedCollectionPhotos(@Path("id") int id,
+                                               @Query("client_id") String apiKey,
+                                               @Query("page") int page,
+                                               @Query("per_page") int per_page);
+
+    @GET("search/photos")
+    Call<SearchResultmodel> getSearchPhotos(@Query("client_id") String apiKey,
+                                                  @Query("query") String query,
+                                                  @Query("page") int page,
+                                                  @Query("per_page") int pageLimit);
 }

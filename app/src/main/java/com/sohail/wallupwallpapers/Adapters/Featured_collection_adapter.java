@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sohail.wallupwallpapers.Activities.InfiniteScrollerActivity;
 import com.sohail.wallupwallpapers.Models.FeaturedCollectionModel;
+import com.sohail.wallupwallpapers.Models.PhotoModel;
 import com.sohail.wallupwallpapers.R;
 
 
@@ -57,6 +58,13 @@ public class Featured_collection_adapter extends RecyclerView.Adapter<Featured_c
             }
         });
 
+    }
+
+    public void addCollections(List<FeaturedCollectionModel> newCollections) {
+        if(newCollections!=null) {
+            featuredCollectionModels.addAll(newCollections);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
