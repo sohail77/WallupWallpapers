@@ -17,63 +17,230 @@
         android:layout_weight="1"
         android:scaleType="centerCrop"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:elevation="4dp"
-        android:layout_weight="1.5"
-        >
 
-        <com.pkmmte.view.CircularImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/profileImg"
-            app:border="true"
-            android:layout_margin="7dp"
-            app:border_color="#EEEEEE"
-            app:border_width="4dp"
-            app:shadow="true" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/username"
-            android:text="username"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            android:textStyle="bold"/>
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical"-->
+    <!--android:elevation="4dp"-->
+    <!--android:layout_weight="1.5"-->
+    <!--&gt;-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/location"
-            android:text="location"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            />
-
-        <LinearLayout
+        <com.truizlop.fabreveallayout.FABRevealLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="top|center"
-            android:elevation="4dp">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Download"
-                android:id="@+id/downloadBtn"/>
+            android:layout_weight="1.5"
+            android:id="@+id/fablayout">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="set"
-                android:id="@+id/setBtn"/>
-        </LinearLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                app:backgroundTint="@android:color/black"
+                android:src="@drawable/download"
+                android:scaleType="center"
+                />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:elevation="4dp"
+                android:layout_weight="1.5">
+
+
+                <com.pkmmte.view.CircularImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/profileImg"
+                    app:border="true"
+                    app:border_color="#000"
+                    app:border_width="2dp"
+                    app:shadow="true" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/user"
+                    android:text="username"
+                    android:layout_margin="3dp"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/location"
+                    android:text="location"
+                    android:layout_margin="3dp"
+                    android:gravity="center"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="14dp"
+                        android:layout_weight=".7">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/views"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="views"
+                            android:textSize="17sp"
+                            android:id="@+id/viewTxt"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="14dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/downloadblack"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="downloads"
+                            android:textSize="17sp"
+                            android:id="@+id/downloadTxt"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="14dp"
+                        android:layout_weight=".9">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/likes"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="likes"
+                            android:textSize="17sp"
+                            android:id="@+id/likeTxt"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:id="@+id/setLayout">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/set"
+                        android:layout_gravity="center"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="set as"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/setBtn"
+                    android:textSize="15sp"
+                    android:layout_gravity="center"
+                    android:theme="@style/PrimaryFlatButton"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:id="@+id/downloadLayout">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/download"
+                        android:layout_gravity="center"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Download"
+                        android:layout_gravity="center"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/white"
+                        android:id="@+id/downloadBtn"
+                        android:theme="@style/PrimaryFlatButton"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/xBtn"
+                    android:src="@drawable/back"
+                    android:layout_gravity="bottom|center"
+                    android:layout_margin="10dp"/>
+            </LinearLayout>
+
+        </com.truizlop.fabreveallayout.FABRevealLayout>
+
+
+
+
+
 
 
 </LinearLayout>

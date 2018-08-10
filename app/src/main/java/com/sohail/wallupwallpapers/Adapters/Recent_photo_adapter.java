@@ -78,11 +78,17 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View view) {
                     Intent i=new Intent(context, ImageViewerActivity.class);
+                    i.putExtra("i",1);
+                    i.putExtra("id",recentPhotos.get(position).getId());
                     i.putExtra("profileImage",recentPhotos.get(position).getUser().getProfileImage().getImage_large());
-                    i.putExtra("Image",recentPhotos.get(position).getUrls().getImage_raw());
+                    i.putExtra("Image",recentPhotos.get(position).getUrls().getImage_regular());
                     i.putExtra("likes",recentPhotos.get(position).getLikes());
-                    i.putExtra("usrname",recentPhotos.get(position).getUser().getName());
+                    i.putExtra("user",recentPhotos.get(position).getUser().getName());
+                    i.putExtra("username",recentPhotos.get(position).getUser().getUsername());
                     i.putExtra("location",recentPhotos.get(position).getUser().getLocation());
+                    i.putExtra("bio",recentPhotos.get(position).getUser().getBio());
+                    i.putExtra("instaName",recentPhotos.get(position).getUser().getInstaName());
+                    i.putExtra("total_photos",recentPhotos.get(position).getUser().getTotal_photos());
                     recent_photo_holder.recentImg.setTransitionName("sharedTransition");
                     Pair<View,String> pair=Pair.create((View)recent_photo_holder.recentImg,recent_photo_holder.recentImg.getTransitionName());
                     ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,pair);

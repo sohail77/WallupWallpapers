@@ -41,6 +41,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
     implementation 'com.pkmmte.view:circularimageview:1.1'
+    implementation 'com.truizlop.fabreveallayout:library:1.0.0'
+
 
 
 }

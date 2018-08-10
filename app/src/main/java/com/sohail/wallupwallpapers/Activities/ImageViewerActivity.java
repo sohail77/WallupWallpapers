@@ -20,31 +20,50 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pkmmte.view.CircularImageView;
+import com.sohail.wallupwallpapers.Adapters.InfinitePhotoAdapter;
+import com.sohail.wallupwallpapers.Api.ApiClient;
+import com.sohail.wallupwallpapers.Api.UnsplashService;
+import com.sohail.wallupwallpapers.Models.PhotoModel;
+import com.sohail.wallupwallpapers.Models.PhotoStats;
 import com.sohail.wallupwallpapers.R;
+import com.truizlop.fabreveallayout.FABRevealLayout;
+import com.truizlop.fabreveallayout.OnRevealChangeListener;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ImageViewerActivity extends AppCompatActivity {
 
     private static final String DIR_NAME ="WallUp Wallpapers";
+    public static String API_KEY="571250bdd8ee6d1e69c98520dcc78e4505833a0273b97684358f00d19c30fed9";
     private static final String LOG_TAG =ImageViewerActivity.class.getSimpleName() ;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE =2 ;
     ImageView detailImg;
     CircularImageView profileImg;
-    TextView username,location;
+    TextView user,location,viewsTxt,downloadTxt,likesTxt;
     Uri imageUri;
     DownloadManager downloadManager;
     Button downloadBtn,setBtn;
     long downloadReference;
     Bitmap bmp;
     private String filename="Wallpaper.jpg";
+    int i;
+    FABRevealLayout fabRevealLayout;
+    ImageView xBtn;
+
 
 
     @Override
@@ -54,12 +73,30 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         detailImg=(ImageView)findViewById(R.id.detailImg);
         profileImg=(CircularImageView)findViewById(R.id.profileImg);
-        username=(TextView)findViewById(R.id.username);
+        user=(TextView)findViewById(R.id.user);
         downloadBtn=(Button)findViewById(R.id.downloadBtn);
         setBtn=(Button)findViewById(R.id.setBtn);
         location=(TextView)findViewById(R.id.location);
-        username.setText(getIntent().getStringExtra("usrname"));
-        location.setText(getIntent().getStringExtra("location"));
+        fabRevealLayout=(FABRevealLayout)findViewById(R.id.fablayout);
+        xBtn=(ImageView) findViewById(R.id.xBtn);
+        viewsTxt=(TextView)findViewById(R.id.viewTxt);
+        downloadTxt=(TextView)findViewById(R.id.downloadTxt);
+        likesTxt=(TextView)findViewById(R.id.likeTxt);
+
+
+        //Getting User Details from Intent
+        user.setText(getIntent().getStringExtra("user"));
+
+        String loc=getIntent().getStringExtra("location");
+        if(loc == null){
+            location.setText("unknown");
+        }else
+            location.setText(getIntent().getStringExtra("location"));
+
+
+        i=getIntent().getExtras().getInt("i");
+
+
         Glide.with(getApplicationContext())
                 .load(getIntent().getStringExtra("Image"))
                 .centerCrop()
@@ -69,6 +106,26 @@ public class ImageViewerActivity extends AppCompatActivity {
                 .load(getIntent().getStringExtra("profileImage"))
                 .centerCrop()
                 .into(profileImg);
+
+        //GET PHOTO STATS
+        //RECENT PHOTOS FIRST FETCH
+        UnsplashService service= ApiClient.getClient().create(UnsplashService.class);
+        Call<PhotoStats> call=service.getPhotoStats(getIntent().getStringExtra("id"),API_KEY);
+        call.enqueue(new Callback<PhotoStats>() {
+            @Override
+            public void onResponse(Call<PhotoStats> call, Response<PhotoStats> response) {
+                PhotoStats photoStats=response.body();
+                viewsTxt.setText(String.valueOf(photoStats.getViews().getTotal()));
+                downloadTxt.setText(String.valueOf(photoStats.getDownloads().getTotal()));
+                likesTxt.setText(String.valueOf(photoStats.getLikes().getTotal()));
+
+            }
+
+            @Override
+            public void onFailure(Call<PhotoStats> call, Throwable t) {
+
+            }
+        });
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -82,6 +139,7 @@ public class ImageViewerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DownloadData(imageUri);
+                fabRevealLayout.revealMainView();
             }
         });
 
@@ -91,6 +149,14 @@ public class ImageViewerActivity extends AppCompatActivity {
                 detailImg.buildDrawingCache();
                 bmp=detailImg.getDrawingCache();
                 settingWallpaper(bmp);
+                fabRevealLayout.revealMainView();
+            }
+        });
+
+        xBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fabRevealLayout.revealMainView();
             }
         });
 
@@ -110,6 +176,24 @@ public class ImageViewerActivity extends AppCompatActivity {
                 return;
             }
         }
+
+        if(i==1) {
+            profileImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(ImageViewerActivity.this, UserProfileActivity.class);
+                    i.putExtra("username", getIntent().getStringExtra("username"));
+                    i.putExtra("name", getIntent().getStringExtra("user"));
+                    i.putExtra("profileImg", getIntent().getStringExtra("profileImage"));
+                    i.putExtra("bio", getIntent().getStringExtra("bio"));
+                    i.putExtra("instaName", getIntent().getStringExtra("instaName"));
+                    i.putExtra("totalPhotos", getIntent().getExtras().getInt("total_photos"));
+                    i.putExtra("location", getIntent().getStringExtra("location"));
+                    startActivity(i);
+                }
+            });
+        }else
+            Log.d("olllllllllllla", getClass().getSimpleName() + " text changed " + i);
 
 
 

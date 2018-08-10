@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.ImageViewerActivity" />
-        <activity android:name=".Activities.InfiniteScrollerActivity"></activity>
+        <activity android:name=".Activities.InfiniteScrollerActivity" />
+        <activity android:name=".Activities.UserProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -51,11 +51,17 @@ public class InfinitePhotoAdapter extends RecyclerView.Adapter<InfinitePhotoAdap
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(context, ImageViewerActivity.class);
+                i.putExtra("i",1);
+                i.putExtra("id",recentList.get(position).getId());
                 i.putExtra("profileImage",recentList.get(position).getUser().getProfileImage().getImage_large());
-                i.putExtra("Image",recentList.get(position).getUrls().getImage_raw());
+                i.putExtra("Image",recentList.get(position).getUrls().getImage_regular());
                 i.putExtra("likes",recentList.get(position).getLikes());
-                i.putExtra("usrname",recentList.get(position).getUser().getName());
+                i.putExtra("user",recentList.get(position).getUser().getName());
                 i.putExtra("location",recentList.get(position).getUser().getLocation());
+                i.putExtra("username",recentList.get(position).getUser().getUsername());
+                i.putExtra("bio",recentList.get(position).getUser().getBio());
+                i.putExtra("instaName",recentList.get(position).getUser().getInstaName());
+                i.putExtra("total_photos",recentList.get(position).getUser().getTotal_photos());
                 holder.imageView.setTransitionName("sharedTransition");
                 Pair<View,String> pair=Pair.create((View)holder.imageView,holder.imageView.getTransitionName());
                 ActivityOptionsCompat optionsCompat=ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,pair);
