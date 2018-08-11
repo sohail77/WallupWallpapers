@@ -1,12 +1,17 @@
 package com.sohail.wallupwallpapers.Activities;
 
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sohail.wallupwallpapers.Adapters.Featured_collection_adapter;
@@ -33,36 +38,35 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
 
     public int PAGE_LIMIT=30;
     public static String API_KEY="571250bdd8ee6d1e69c98520dcc78e4505833a0273b97684358f00d19c30fed9";
-    public static String HEADER_IMG_URL="https://images.unsplash.com/photo-1532288191429-2093e0783809?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6583d68060ff2f60484f7edaf88ee276&auto=format&fit=crop&w=3450&q=80";
 
     private GridLayoutManager gridLayoutManager;
     private InfiniteScrollListener infiniteScrollListener;
     RecyclerView infiniteRv;
-    ImageView headerImg;
     InfinitePhotoAdapter adapter;
     SearchResultAdapter searchResultAdapter;
     Featured_collection_adapter featured_collection_adapter,curated_collection_adapter;
     boolean isCurated;
     int i,id;
+    TextView headerTxt;
+    ProgressBar progressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_scroller);
-        headerImg=(ImageView)findViewById(R.id.headerImg);
         infiniteRv=(RecyclerView)findViewById(R.id.infiniteRv);
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        infiniteRv.hasFixedSize();
-        infiniteRv.setLayoutManager(gridLayoutManager);
+        headerTxt=(TextView)findViewById(R.id.headerTxt);
+        progressBar=(ProgressBar)findViewById(R.id.progressBarInfy);
+        headerTxt.setText(getIntent().getStringExtra("headerTxt"));
         i=getIntent().getExtras().getInt("history");
         id=getIntent().getExtras().getInt("collectionId");
-        Glide.with(this)
-                .load(HEADER_IMG_URL)
-                .centerCrop()
-                .into(headerImg);
-
-
+        if(i==1||i==2||i==5) {
+            gridLayoutManager = new GridLayoutManager(this, 2);
+        }else
+            gridLayoutManager = new GridLayoutManager(this, 1);
+        infiniteRv.hasFixedSize();
+        infiniteRv.setLayoutManager(gridLayoutManager);
 
         infiniteScrollListener = new InfiniteScrollListener(gridLayoutManager) {
             @Override
@@ -100,6 +104,13 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
             String query=getIntent().getStringExtra("query");
             getFirstSearchPhotos(query);
         }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transition));
+            headerTxt.setTransitionName("sharedTransition");
+        }
+
     }
 
     private void updateSearchLists(String query, int page) {
@@ -129,6 +140,8 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
                 searchResultAdapter = new SearchResultAdapter(InfiniteScrollerActivity.this, resultsArray);
                 searchResultAdapter.notifyDataSetChanged();
                 infiniteRv.setAdapter(searchResultAdapter);
+                progressBar.setVisibility(View.GONE);
+                infiniteRv.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -149,6 +162,8 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
                 curated_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
                 curated_collection_adapter.notifyDataSetChanged();
                 infiniteRv.setAdapter(curated_collection_adapter);
+                progressBar.setVisibility(View.GONE);
+                infiniteRv.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -168,6 +183,8 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
                 featured_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
                 featured_collection_adapter.notifyDataSetChanged();
                 infiniteRv.setAdapter(featured_collection_adapter);
+                progressBar.setVisibility(View.GONE);
+                infiniteRv.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -223,6 +240,8 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
                 adapter = new InfinitePhotoAdapter(InfiniteScrollerActivity.this, photoModelList);
                 adapter.notifyDataSetChanged();
                 infiniteRv.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
+                infiniteRv.setVisibility(View.VISIBLE);
 
             }
 
@@ -249,6 +268,8 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
                 adapter = new InfinitePhotoAdapter(InfiniteScrollerActivity.this, photoModelList);
                 adapter.notifyDataSetChanged();
                 infiniteRv.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
+                infiniteRv.setVisibility(View.VISIBLE);
 
             }
 

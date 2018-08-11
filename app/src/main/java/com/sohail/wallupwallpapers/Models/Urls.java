@@ -6,6 +6,7 @@ public class Urls {
     @SerializedName("regular") private String image_regular;
     @SerializedName("small") private String image_small;
     @SerializedName("raw") private String image_raw;
+    @SerializedName("full") private String full;
 
 
 
@@ -15,6 +16,10 @@ public class Urls {
 
     public String getImage_small() {
         return image_small;
+    }
+
+    public String getFull() {
+        return full;
     }
 
     public String getImage_raw() {

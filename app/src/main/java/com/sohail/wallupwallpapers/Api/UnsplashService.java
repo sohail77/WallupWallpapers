@@ -4,6 +4,7 @@ import com.sohail.wallupwallpapers.Models.FeaturedCollectionModel;
 import com.sohail.wallupwallpapers.Models.PhotoModel;
 import com.sohail.wallupwallpapers.Models.PhotoStats;
 import com.sohail.wallupwallpapers.Models.SearchResultmodel;
+import com.sohail.wallupwallpapers.Models.links;
 
 import java.util.List;
 
@@ -58,5 +59,9 @@ public interface UnsplashService {
     @GET("/photos/{id}/statistics")
     Call<PhotoStats> getPhotoStats(@Path("id") String id,
                                   @Query("client_id") String apiKey);
+
+    @GET("/photos/{id}/download")
+    Call<links> getDownloadEndpoint(@Path("id") String id,
+                                    @Query("client_id") String apiKey);
 
 }

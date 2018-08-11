@@ -13,6 +13,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
@@ -33,6 +37,7 @@ import com.sohail.wallupwallpapers.Api.ApiClient;
 import com.sohail.wallupwallpapers.Api.UnsplashService;
 import com.sohail.wallupwallpapers.Models.PhotoModel;
 import com.sohail.wallupwallpapers.Models.PhotoStats;
+import com.sohail.wallupwallpapers.Models.links;
 import com.sohail.wallupwallpapers.R;
 import com.truizlop.fabreveallayout.FABRevealLayout;
 import com.truizlop.fabreveallayout.OnRevealChangeListener;
@@ -62,6 +67,7 @@ public class ImageViewerActivity extends AppCompatActivity {
     private String filename="Wallpaper.jpg";
     int i;
     FABRevealLayout fabRevealLayout;
+    CircularProgressDrawable circularProgressDrawable;
     ImageView xBtn;
 
 
@@ -82,7 +88,10 @@ public class ImageViewerActivity extends AppCompatActivity {
         viewsTxt=(TextView)findViewById(R.id.viewTxt);
         downloadTxt=(TextView)findViewById(R.id.downloadTxt);
         likesTxt=(TextView)findViewById(R.id.likeTxt);
-
+        circularProgressDrawable=new CircularProgressDrawable(this);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
 
         //Getting User Details from Intent
         user.setText(getIntent().getStringExtra("user"));
@@ -100,6 +109,7 @@ public class ImageViewerActivity extends AppCompatActivity {
         Glide.with(getApplicationContext())
                 .load(getIntent().getStringExtra("Image"))
                 .centerCrop()
+                .placeholder(circularProgressDrawable)
                 .into(detailImg);
 
         Glide.with(getApplicationContext())
@@ -140,6 +150,7 @@ public class ImageViewerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DownloadData(imageUri);
                 fabRevealLayout.revealMainView();
+                registerDownload(getIntent().getStringExtra("id"));
             }
         });
 
@@ -148,7 +159,7 @@ public class ImageViewerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 detailImg.buildDrawingCache();
                 bmp=detailImg.getDrawingCache();
-                settingWallpaper(bmp);
+                settingWallpaper(bmp,imageUri);
                 fabRevealLayout.revealMainView();
             }
         });
@@ -224,9 +235,10 @@ public class ImageViewerActivity extends AppCompatActivity {
         }
     }
 
-    private void settingWallpaper(Bitmap bmp){
+    private void settingWallpaper(Bitmap bmp,Uri imageUri){
         WallpaperManager wallManager = WallpaperManager.getInstance(getApplicationContext());
         try {
+
             wallManager.setBitmap(bmp);
             Toast.makeText(ImageViewerActivity.this, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
@@ -297,5 +309,21 @@ public class ImageViewerActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(downloadReceiver);
+    }
+
+    public void registerDownload(String id){
+        UnsplashService service= ApiClient.getClient().create(UnsplashService.class);
+        Call<links> call=service.getDownloadEndpoint(id,API_KEY);
+        call.enqueue(new Callback<links>() {
+            @Override
+            public void onResponse(Call<links> call, Response<links> response) {
+                links res=response.body();
+            }
+
+            @Override
+            public void onFailure(Call<links> call, Throwable t) {
+
+            }
+        });
     }
 }

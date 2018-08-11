@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
     private List<PhotoModel> recentPhotos=new ArrayList<>();
     private static final int TYPE_FOOTER = 1;
     private static final int TYPE_ITEM = 2;
+    CircularProgressDrawable circularProgressDrawable;
 
     public Recent_photo_adapter(Context context, List<PhotoModel> recentPhotos) {
         this.context = context;
@@ -53,6 +55,11 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+
+        circularProgressDrawable=new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
         if (holder instanceof FooterViewHolder){
             FooterViewHolder footerViewHolder=(FooterViewHolder)holder;
             footerViewHolder.footerText.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +67,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
                 public void onClick(View view) {
                     Intent intent=new Intent(context, InfiniteScrollerActivity.class);
                     intent.putExtra("history",1);
+                    intent.putExtra("headerTxt","Recent Photos");
                     context.startActivity(intent);
 
                 }
@@ -71,6 +79,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
             Glide.with(context)
                     .load(photo.getUrls().getImage_regular())
                     .centerCrop()
+                    .placeholder(circularProgressDrawable)
                     .into(((Recent_photo_holder) holder).recentImg);
 
             recent_photo_holder.recentImg.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +90,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
                     i.putExtra("i",1);
                     i.putExtra("id",recentPhotos.get(position).getId());
                     i.putExtra("profileImage",recentPhotos.get(position).getUser().getProfileImage().getImage_large());
-                    i.putExtra("Image",recentPhotos.get(position).getUrls().getImage_regular());
+                    i.putExtra("Image",recentPhotos.get(position).getUrls().getFull());
                     i.putExtra("likes",recentPhotos.get(position).getLikes());
                     i.putExtra("user",recentPhotos.get(position).getUser().getName());
                     i.putExtra("username",recentPhotos.get(position).getUser().getUsername());

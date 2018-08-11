@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import java.util.List;
 public class ProfilePhotosAdapter extends RecyclerView.Adapter<ProfilePhotosAdapter.ViewHolder>{
 
     Context context;
+    CircularProgressDrawable circularProgressDrawable;
     private List<PhotoModel> recentList=new ArrayList<>();
 
     public ProfilePhotosAdapter(Context context, List<PhotoModel> recentList) {
@@ -43,9 +45,14 @@ public class ProfilePhotosAdapter extends RecyclerView.Adapter<ProfilePhotosAdap
     @Override
     public void onBindViewHolder(@NonNull final ProfilePhotosAdapter.ViewHolder holder, final int position) {
         PhotoModel photos=recentList.get(position);
+        circularProgressDrawable=new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
         Glide.with(context)
                 .load(photos.getUrls().getImage_regular())
                 .centerCrop()
+                .placeholder(circularProgressDrawable)
                 .into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -53,6 +60,7 @@ public class ProfilePhotosAdapter extends RecyclerView.Adapter<ProfilePhotosAdap
             public void onClick(View view) {
                 Intent i=new Intent(context, ImageViewerActivity.class);
                 i.putExtra("i",2);
+                i.putExtra("id",recentList.get(position).getId());
                 i.putExtra("profileImage",recentList.get(position).getUser().getProfileImage().getImage_large());
                 i.putExtra("Image",recentList.get(position).getUrls().getImage_raw());
                 i.putExtra("likes",recentList.get(position).getLikes());

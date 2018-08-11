@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     MaterialSearchBar searchBar;
     ImageView backgroundImg;
     TextView seeAllTxt,seeAllTxt2;
+    ProgressBar progressBar,progressBar2,progressBar3;
 
 
     @BindView(R.id.mainTxt)
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
         backgroundImg=(ImageView)findViewById(R.id.background_img);
         recyclerView = (RecyclerView) findViewById(R.id.recentPhotos);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        progressBar2=(ProgressBar)findViewById(R.id.progressBar2);
+        progressBar3=(ProgressBar)findViewById(R.id.progressBar3);
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -158,6 +163,8 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                     adapter = new Recent_photo_adapter(MainActivity.this, photoModelList);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
+                    progressBar3.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
             }
 
@@ -186,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                 featured_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
                 featured_collection_adapter.notifyDataSetChanged();
                 featured_collection_rv.setAdapter(featured_collection_adapter);
+                progressBar.setVisibility(View.GONE);
+                featured_collection_rv.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -204,6 +213,8 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                 curated_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
                 curated_collection_adapter.notifyDataSetChanged();
                 curated_collection_rv.setAdapter(curated_collection_adapter);
+                progressBar2.setVisibility(View.GONE);
+                curated_collection_rv.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -217,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this, InfiniteScrollerActivity.class);
                 intent.putExtra("history",3);
+                intent.putExtra("headerTxt","Featured Collections");
                 startActivity(intent);
             }
         });
@@ -226,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this, InfiniteScrollerActivity.class);
                 intent.putExtra("history",4);
+                intent.putExtra("headerTxt","Curated Collections");
                 startActivity(intent);
             }
         });
@@ -260,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         Log.d("olllllllllllla", getClass().getSimpleName() + " text changed " + searchBar.getText());
         Intent i=new Intent(MainActivity.this,InfiniteScrollerActivity.class);
         i.putExtra("history",5);
+        i.putExtra("headerTxt","Results for : " +searchBar.getText());
         i.putExtra("query",searchBar.getText());
         startActivity(i);
     }

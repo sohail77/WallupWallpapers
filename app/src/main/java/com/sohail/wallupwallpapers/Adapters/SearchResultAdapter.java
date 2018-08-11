@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,8 @@ import java.util.List;
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
 
    Context context;
-   private SearchResultmodel searchResultmodels;
    private List<ResultsArray> resultsArrays;
+   CircularProgressDrawable circularProgressDrawable;
 
     public SearchResultAdapter(Context context, List<ResultsArray> resultsArray) {
         this.context = context;
@@ -44,9 +45,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @Override
     public void onBindViewHolder(@NonNull final SearchResultAdapter.ViewHolder holder, final int position) {
         ResultsArray searchResultlist=resultsArrays.get(position);
+        circularProgressDrawable=new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
         Glide.with(context)
                 .load(searchResultlist.getUrls().getImage_regular())
                 .centerCrop()
+                .placeholder(circularProgressDrawable)
                 .into(holder.imageView);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {

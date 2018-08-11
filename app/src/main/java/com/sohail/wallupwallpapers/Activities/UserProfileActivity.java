@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.pkmmte.view.CircularImageView;
@@ -24,12 +26,14 @@ public class UserProfileActivity extends AppCompatActivity {
     public int PAGE_LIMIT=30;
     public static String API_KEY="571250bdd8ee6d1e69c98520dcc78e4505833a0273b97684358f00d19c30fed9";
     CircularImageView profileImg;
-    TextView name,location,bio,total_photos,instName;
+    TextView name,location,total_photos,instName;
     String username;
     ProfilePhotosAdapter adapter;
     RecyclerView rv;
     private GridLayoutManager gridLayoutManager;
     private InfiniteScrollListener infiniteScrollListener;
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +41,9 @@ public class UserProfileActivity extends AppCompatActivity {
         profileImg=(CircularImageView)findViewById(R.id.userImg);
         name=(TextView)findViewById(R.id.profileUserName);
         location=(TextView)findViewById(R.id.profileLocation);
-        bio=(TextView)findViewById(R.id.profileBio);
         total_photos=(TextView)findViewById(R.id.profilePhotos);
         instName=(TextView)findViewById(R.id.profileInsta);
+        progressBar=(ProgressBar)findViewById(R.id.progressBarUser);
 
         rv=(RecyclerView)findViewById(R.id.profileRv);
         gridLayoutManager = new GridLayoutManager(this, 1);
@@ -55,13 +59,19 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
         name.setText(getIntent().getStringExtra("name"));
-        location.setText(getIntent().getStringExtra("location"));
-        bio.setText(getIntent().getStringExtra("bio"));
-        instName.setText(getIntent().getStringExtra("instaName"));
-        total_photos.setText(String.valueOf(getIntent().getExtras().getInt("totalPhotos")));
+
+        String loc=getIntent().getStringExtra("location");
+        if(loc == null){
+            location.setText("unknown");
+        }else
+            location.setText(getIntent().getStringExtra("location"));
+
+
+        instName.setText("Instagram : " + getIntent().getStringExtra("instaName"));
+        total_photos.setText("Total Photos : " + String.valueOf(getIntent().getExtras().getInt("totalPhotos")));
         username=getIntent().getStringExtra("username");
 
-        //RECENT PHOTOS FIRST FETCH
+        //USER PHOTOS FIRST FETCH
         UnsplashService service= ApiClient.getClient().create(UnsplashService.class);
         Call<List<PhotoModel>> call=service.getUserProfile(username,API_KEY,1,PAGE_LIMIT);
         call.enqueue(new Callback<List<PhotoModel>>() {
@@ -71,6 +81,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 adapter = new ProfilePhotosAdapter(UserProfileActivity.this, photoModelList);
                 adapter.notifyDataSetChanged();
                 rv.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
+                rv.setVisibility(View.VISIBLE);
 
             }
 

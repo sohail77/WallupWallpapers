@@ -7,6 +7,11 @@ public class PhotoModel {
     @SerializedName("user") private User user;
     @SerializedName("urls") private Urls urls;
     @SerializedName("likes") private int likes;
+    @SerializedName("links") private links links;
+
+    public com.sohail.wallupwallpapers.Models.links getLinks() {
+        return links;
+    }
 
     public String getId() {
         return id;

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class InfinitePhotoAdapter extends RecyclerView.Adapter<InfinitePhotoAdap
 
     Context context;
     public List<PhotoModel> recentList=new ArrayList<>();
+    CircularProgressDrawable circularProgressDrawable;
 
     public InfinitePhotoAdapter(Context context, List<PhotoModel> recentPhotos) {
         this.context = context;
@@ -41,10 +43,15 @@ public class InfinitePhotoAdapter extends RecyclerView.Adapter<InfinitePhotoAdap
 
     @Override
     public void onBindViewHolder(@NonNull final InfinitePhotoAdapter.ViewHolder holder, final int position) {
+        circularProgressDrawable=new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
         PhotoModel photos=recentList.get(position);
         Glide.with(context)
                 .load(photos.getUrls().getImage_regular())
                 .centerCrop()
+                .placeholder(circularProgressDrawable)
                 .into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

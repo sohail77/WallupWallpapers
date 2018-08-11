@@ -53,12 +53,19 @@
                         android:textStyle="bold"/>
                 </LinearLayout>
 
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/progressBar"
+                    android:theme="@style/AppTheme.WhiteAccent"/>
+
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/featuredCollectionrv"
                     android:layout_margin="4dp"
+                    android:visibility="gone"
                     >
             </android.support.v7.widget.RecyclerView>
 
@@ -106,10 +113,16 @@
                 </LinearLayout>
 
 
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/progressBar2"
+                    android:theme="@style/AppTheme.WhiteAccent"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:id="@+id/curatedCollectionrv"
                     android:layout_margin="4dp"
                     >
@@ -140,10 +153,17 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/black"/>
 
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/progressBar3"
+                android:theme="@style/AppTheme.WhiteAccent"/>
+
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recentPhotos"
+                android:visibility="gone"
                 android:layout_margin="4dp">
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
@@ -190,10 +210,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:id="@+id/mainTxt"
-                android:text="Beautiful, free photos."
+                android:text="Beautiful, free photos \n from Unsplash."
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 />
 
             <com.mancj.materialsearchbar.MaterialSearchBar

@@ -1,8 +1,14 @@
 package com.sohail.wallupwallpapers.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +30,7 @@ public class Featured_collection_adapter extends RecyclerView.Adapter<Featured_c
 
     Context context;
     List<FeaturedCollectionModel> featuredCollectionModels=new ArrayList<>();
+    CircularProgressDrawable circularProgressDrawable;
 
     public Featured_collection_adapter(Context context, List<FeaturedCollectionModel> featuredCollectionModels) {
         this.context = context;
@@ -39,22 +46,34 @@ public class Featured_collection_adapter extends RecyclerView.Adapter<Featured_c
 
     @Override
     public void onBindViewHolder(@NonNull final Featured_collection_adapter.ViewHolder holder, final int position) {
+
+        circularProgressDrawable=new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
         final FeaturedCollectionModel collectionModel=featuredCollectionModels.get(position);
         Glide.with(context)
                 .load(collectionModel.getCoverPhoto().getUrls().getImage_regular())
                 .centerCrop()
+                .placeholder(circularProgressDrawable)
                 .into(holder.FeaturedcollectionImg);
+
+        String text= String.valueOf(featuredCollectionModels.get(position).getTotal_photos()) + " photos";
         holder.collectionName.setText(featuredCollectionModels.get(position).getTitle());
+        holder.numTxt.setText(text);
 
         holder.FeaturedcollectionImg.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(context, InfiniteScrollerActivity.class);
+                i.putExtra("headerTxt",featuredCollectionModels.get(position).getTitle());
                 i.putExtra("collectionId",featuredCollectionModels.get(position).getId());
                 i.putExtra("history",2);
                 i.putExtra("coverImg",featuredCollectionModels.get(position).getCoverPhoto().getUrls().getImage_regular());
                 i.putExtra("curated",featuredCollectionModels.get(position).isCurated());
                 context.startActivity(i);
+
             }
         });
 
@@ -74,11 +93,12 @@ public class Featured_collection_adapter extends RecyclerView.Adapter<Featured_c
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView FeaturedcollectionImg;
-        TextView collectionName;
+        TextView collectionName,numTxt;
         public ViewHolder(View itemView) {
             super(itemView);
             FeaturedcollectionImg=itemView.findViewById(R.id.featured_collection_img);
             collectionName=itemView.findViewById(R.id.collectionName);
+            numTxt=itemView.findViewById(R.id.numTxt);
         }
     }
 }

@@ -37,7 +37,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                app:backgroundTint="@android:color/black"
+                app:backgroundTint="#212121"
                 android:src="@drawable/download"
                 android:scaleType="center"
                 />
@@ -57,26 +57,64 @@
                     android:id="@+id/profileImg"
                     app:border="true"
                     app:border_color="#000"
+                    android:transitionName="profileTrans"
                     app:border_width="2dp"
                     app:shadow="true" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/user"
-                    android:text="username"
-                    android:layout_margin="3dp"
-                    android:gravity="center"
-                    android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/user"
+                        android:text="username"
+                        android:layout_margin="3dp"
+                        android:gravity="center"
+                        android:textStyle="bold"/>
 
-                <TextView
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/location"
-                    android:text="location"
-                    android:layout_margin="3dp"
-                    android:gravity="center"
-                    />
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/location"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/location"
+                        android:text="location"
+                        android:layout_margin="3dp"
+                        android:gravity="center"
+                        />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="#88000000"
+
+                        />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/link"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Unsplash.com"
+
+                        android:layout_margin="3dp" />
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -91,10 +129,17 @@
                         android:layout_margin="14dp"
                         android:layout_weight=".7">
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:src="@drawable/views"
+                        <!--<ImageView-->
+                            <!--android:layout_width="15dp"-->
+                            <!--android:layout_height="15dp"-->
+                            <!--android:src="@drawable/views"-->
+                            <!--android:layout_gravity="center"/>-->
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Views"
                             android:layout_gravity="center"/>
 
                         <TextView
@@ -114,10 +159,11 @@
                         android:layout_margin="14dp"
                         android:layout_weight="1">
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:src="@drawable/downloadblack"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Downloads"
                             android:layout_gravity="center"/>
 
                         <TextView
@@ -137,10 +183,11 @@
                         android:layout_margin="14dp"
                         android:layout_weight=".9">
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:src="@drawable/likes"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Likes"
                             android:layout_gravity="center"/>
 
                         <TextView
