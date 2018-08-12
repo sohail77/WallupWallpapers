@@ -1,6 +1,7 @@
 package com.sohail.wallupwallpapers;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -14,13 +15,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.github.florent37.expectanim.ExpectAnim;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.sohail.wallupwallpapers.Activities.AboutActivity;
 import com.sohail.wallupwallpapers.Activities.InfiniteScrollerActivity;
+import com.sohail.wallupwallpapers.Activities.OnBoarding;
 import com.sohail.wallupwallpapers.Adapters.Featured_collection_adapter;
 import com.sohail.wallupwallpapers.Adapters.Recent_photo_adapter;
 import com.sohail.wallupwallpapers.Api.ApiClient;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     RecyclerView featured_collection_rv,curated_collection_rv;
     Featured_collection_adapter featured_collection_adapter,curated_collection_adapter;
     MaterialSearchBar searchBar;
-    ImageView backgroundImg;
+    ImageView backgroundImg,aboutIcon;
     TextView seeAllTxt,seeAllTxt2;
     ProgressBar progressBar,progressBar2,progressBar3;
 
@@ -86,11 +88,26 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        SharedPreferences settings=getSharedPreferences("prefs",0);
+        boolean firstRun=settings.getBoolean("firstRun",false);
+        if(!firstRun)//if running for first time
+        //Splash will load for first time
+        {
+            SharedPreferences.Editor editor=settings.edit();
+            editor.putBoolean("firstRun",true);
+            editor.apply();
+            Intent i=new Intent(MainActivity.this,OnBoarding.class);
+            startActivity(i);
+            finish();
+        }
+
         backgroundImg=(ImageView)findViewById(R.id.background_img);
         recyclerView = (RecyclerView) findViewById(R.id.recentPhotos);
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
         progressBar2=(ProgressBar)findViewById(R.id.progressBar2);
         progressBar3=(ProgressBar)findViewById(R.id.progressBar3);
+        aboutIcon=(ImageView)findViewById(R.id.aboutIcon);
+
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -136,6 +153,11 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                 .toBe(
                         alpha(0f)
 
+                )
+
+                .expect(aboutIcon)
+                .toBe(
+                        alpha(0f)
                 )
 
                 .expect(backbground)
@@ -239,6 +261,14 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                 Intent intent=new Intent(MainActivity.this, InfiniteScrollerActivity.class);
                 intent.putExtra("history",4);
                 intent.putExtra("headerTxt","Curated Collections");
+                startActivity(intent);
+            }
+        });
+
+        aboutIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
             }
         });

@@ -56,7 +56,7 @@ public class ImageViewerActivity extends AppCompatActivity {
     public static String API_KEY="571250bdd8ee6d1e69c98520dcc78e4505833a0273b97684358f00d19c30fed9";
     private static final String LOG_TAG =ImageViewerActivity.class.getSimpleName() ;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE =2 ;
-    ImageView detailImg;
+    ImageView detailImg,alertImg;
     CircularImageView profileImg;
     TextView user,location,viewsTxt,downloadTxt,likesTxt;
     Uri imageUri;
@@ -88,11 +88,16 @@ public class ImageViewerActivity extends AppCompatActivity {
         viewsTxt=(TextView)findViewById(R.id.viewTxt);
         downloadTxt=(TextView)findViewById(R.id.downloadTxt);
         likesTxt=(TextView)findViewById(R.id.likeTxt);
+        alertImg=(ImageView)findViewById(R.id.alertImg);
         circularProgressDrawable=new CircularProgressDrawable(this);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
 
+        Glide.with(this)
+                .load(R.drawable.alert)
+                .centerCrop()
+                .into(alertImg);
         //Getting User Details from Intent
         user.setText(getIntent().getStringExtra("user"));
 
@@ -159,8 +164,9 @@ public class ImageViewerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 detailImg.buildDrawingCache();
                 bmp=detailImg.getDrawingCache();
-                settingWallpaper(bmp,imageUri);
                 fabRevealLayout.revealMainView();
+                settingWallpaper(bmp,imageUri);
+
             }
         });
 

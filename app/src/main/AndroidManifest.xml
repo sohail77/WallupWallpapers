@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +24,9 @@
         </activity>
         <activity android:name=".Activities.ImageViewerActivity" />
         <activity android:name=".Activities.InfiniteScrollerActivity" />
-        <activity android:name=".Activities.UserProfileActivity"></activity>
+        <activity android:name=".Activities.UserProfileActivity" />
+        <activity android:name=".Activities.AboutActivity" />
+        <activity android:name=".Activities.OnBoarding"></activity>
     </application>
 
 </manifest>

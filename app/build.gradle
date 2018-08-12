@@ -42,7 +42,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
     implementation 'com.pkmmte.view:circularimageview:1.1'
     implementation 'com.truizlop.fabreveallayout:library:1.0.0'
-
+    implementation 'com.github.medyo:android-about-page:1.2.4'
+    implementation 'com.codemybrainsout.onboarding:onboarder:1.0.4'
 
 
 }
