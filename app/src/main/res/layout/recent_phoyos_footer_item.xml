@@ -7,11 +7,39 @@
     app:cardCornerRadius="2dp"
     app:cardElevation="10dp">
 
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recentFooter"
-        android:text="blabla"
-        android:gravity="center"/>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/backImg"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#88000000"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:id="@+id/recentFooter"
+            android:src="@drawable/nextpage"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click to View More"
+            android:textColor="@android:color/white"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="30dp"
+            />
+
+
+
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>

@@ -20,7 +20,7 @@ public class OnBoarding extends AhoyOnboarderActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("WallUp", "Powered By Unsplash", R.drawable.photos);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Welcome to WallUp", "Powered By Unsplash", R.mipmap.ic_launcher_round);
         AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Hi-res Photos", "Free (Do what ever you want) Photos", R.drawable.photos);
         AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Download", "Download and Set as Wallpaper", R.drawable.save);
 

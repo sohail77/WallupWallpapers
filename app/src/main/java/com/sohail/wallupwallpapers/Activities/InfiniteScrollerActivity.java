@@ -55,9 +55,9 @@ public class InfiniteScrollerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_scroller);
-        infiniteRv=(RecyclerView)findViewById(R.id.infiniteRv);
-        headerTxt=(TextView)findViewById(R.id.headerTxt);
-        progressBar=(ProgressBar)findViewById(R.id.progressBarInfy);
+        infiniteRv=findViewById(R.id.infiniteRv);
+        headerTxt=findViewById(R.id.headerTxt);
+        progressBar=findViewById(R.id.progressBarInfy);
         headerTxt.setText(getIntent().getStringExtra("headerTxt"));
         i=getIntent().getExtras().getInt("history");
         id=getIntent().getExtras().getInt("collectionId");

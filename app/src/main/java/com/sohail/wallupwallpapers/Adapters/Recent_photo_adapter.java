@@ -11,6 +11,7 @@ import android.support.v4.util.Pair;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
     private List<PhotoModel> recentPhotos=new ArrayList<>();
     private static final int TYPE_FOOTER = 1;
     private static final int TYPE_ITEM = 2;
+    public String link="https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d00f965d7f845968dd35c3590094149f&auto=format&fit=crop&w=2250&q=80";
     CircularProgressDrawable circularProgressDrawable;
 
     public Recent_photo_adapter(Context context, List<PhotoModel> recentPhotos) {
@@ -62,6 +64,13 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
         circularProgressDrawable.start();
         if (holder instanceof FooterViewHolder){
             FooterViewHolder footerViewHolder=(FooterViewHolder)holder;
+
+            Glide.with(context)
+                    .load(link)
+                    .centerCrop()
+                    .into(footerViewHolder.backImg);
+
+
             footerViewHolder.footerText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -148,11 +157,12 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private class FooterViewHolder extends RecyclerView.ViewHolder {
-        TextView footerText;
+        ImageView footerText,backImg;
 
         public FooterViewHolder(View view) {
             super(view);
-            footerText = (TextView) view.findViewById(R.id.recentFooter);
+            backImg=view.findViewById(R.id.backImg);
+            footerText = view.findViewById(R.id.recentFooter);
         }
     }
 }
