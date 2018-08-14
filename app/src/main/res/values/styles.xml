@@ -16,6 +16,11 @@
         <item name="colorAccent">#ffffff</item>
     </style>
 
+    <style name="PrimaryFlatBlackButton" parent="Theme.AppCompat.Light">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="colorControlHighlight">#000000</item>
+        <item name="colorAccent">#000000</item>
+    </style>
     <style name="PrimaryButton" parent="Theme.AppCompat">
         <item name="colorButtonNormal">@android:color/white</item>
         <item name="colorControlHighlight">@android:color/white</item>

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Wallup Wallpapers</string>
     <string name="note_to_get_the_best_quality_download_and_then_set_as_wallpaper">Note: To get the best quality download and then set as Wallpaper</string>
+    <string name="recent_photos">Recent Photos</string>
+    <string name="see_all">See All</string>
+    <string name="curated_collections">Curated Collections</string>
+    <string name="featured_collections">Featured Collections</string>
+    <string name="beautiful_free_photos">Beautiful, free photos.</string>
+    <string name="oops_check_your_internet_and_press_retry">OOPS Check your Internet and press retry</string>
 </resources>

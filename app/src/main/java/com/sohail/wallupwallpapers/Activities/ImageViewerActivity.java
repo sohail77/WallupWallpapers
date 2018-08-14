@@ -187,8 +187,6 @@ public class ImageViewerActivity extends AppCompatActivity {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant
 
                 return;
             }
@@ -211,8 +209,6 @@ public class ImageViewerActivity extends AppCompatActivity {
             });
         }else
             Log.d("olllllllllllla", getClass().getSimpleName() + " text changed " + i);
-
-
 
     }
 

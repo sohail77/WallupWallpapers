@@ -7,10 +7,45 @@
     android:layout_height="match_parent"
     tools:context="com.sohail.wallupwallpapers.MainActivity">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/oops_check_your_internet_and_press_retry"
+        android:id="@+id/retryTxt"
+        android:layout_gravity="top"
+        android:textSize="20sp"
+        android:layout_marginTop="100dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:visibility="gone"
+        android:gravity="center"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/nointernetImg"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noInternetBtn"
+        android:theme="@style/PrimaryFlatBlackButton"
+        android:text="Retry"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="50dp"
+        android:textSize="20sp"
+        android:visibility="gone"/>
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +54,8 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="300dp" />
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,21 +70,22 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Featured Collections"
+                        android:text="@string/featured_collections"
                         android:textStyle="bold"
-                        android:layout_margin="4dp"
+                        android:layout_margin="6dp"
                         android:textSize="15sp"
                         android:textColor="@android:color/black"
                         />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="See All"
                         android:id="@+id/seeAllTxt"
                         android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_margin="4dp"
+                        android:gravity="end"
+                        android:textColor="@android:color/black"
+                        android:layout_margin="6dp"
                         android:textSize="15sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
@@ -93,21 +130,22 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Curated Collections"
+                        android:text="@string/curated_collections"
                         android:textStyle="bold"
-                        android:layout_margin="4dp"
+                        android:layout_margin="6dp"
                         android:textSize="15sp"
                         android:textColor="@android:color/black"
                         />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="See All"
+                        android:text="@string/see_all"
                         android:id="@+id/seeAllTxt2"
                         android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_margin="4dp"
+                        android:gravity="end"
+                        android:textColor="@android:color/black"
+                        android:layout_margin="6dp"
                         android:textSize="15sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
@@ -147,10 +185,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recent Photos"
+                android:text="@string/recent_photos"
                 android:textStyle="bold"
-                android:layout_margin="4dp"
-                android:textSize="20sp"
+                android:layout_margin="6dp"
+                android:textSize="15sp"
                 android:textColor="@android:color/black"/>
 
             <ProgressBar
@@ -175,45 +213,50 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="300dp"
+        android:id="@+id/mainFrame"
+        >
 
         <View
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:elevation="4dp" />
+            android:elevation="4dp"
+            tools:targetApi="lollipop" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/background_img"
             android:elevation="4dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:targetApi="lollipop" />
 
         <View
             android:id="@+id/scrim"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#88000000"
-            android:elevation="4dp" />
+            android:elevation="4dp"
+            tools:targetApi="lollipop" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/about"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:elevation="4dp"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"
+            android:layout_gravity="end"
+            android:layout_margin="20dp"
             android:id="@+id/aboutIcon"
-            />
+            tools:targetApi="lollipop" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="4dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:targetApi="lollipop">
 
 
 
@@ -222,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:id="@+id/mainTxt"
-                android:text="Beautiful, free photos."
+                android:text="@string/beautiful_free_photos"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="20sp"

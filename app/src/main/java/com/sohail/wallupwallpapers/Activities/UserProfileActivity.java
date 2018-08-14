@@ -66,8 +66,12 @@ public class UserProfileActivity extends AppCompatActivity {
         }else
             location.setText(getIntent().getStringExtra("location"));
 
-
-        instName.setText("Instagram : " + getIntent().getStringExtra("instaName"));
+        loc=getIntent().getStringExtra("instaName");
+        if(loc==null){
+            instName.setText("Instagram : Unknown");
+        }else {
+            instName.setText("Instagram : " + getIntent().getStringExtra("instaName"));
+        }
         total_photos.setText("Total Photos : " + String.valueOf(getIntent().getExtras().getInt("totalPhotos")));
         username=getIntent().getStringExtra("username");
 

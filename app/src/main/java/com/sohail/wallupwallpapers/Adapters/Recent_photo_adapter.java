@@ -71,7 +71,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
                     .into(footerViewHolder.backImg);
 
 
-            footerViewHolder.footerText.setOnClickListener(new View.OnClickListener() {
+            footerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent=new Intent(context, InfiniteScrollerActivity.class);

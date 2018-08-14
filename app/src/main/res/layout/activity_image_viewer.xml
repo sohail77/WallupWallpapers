@@ -8,8 +8,6 @@
     android:orientation="vertical"
     >
 
-
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,16 +15,6 @@
         android:layout_weight="1"
         android:scaleType="centerCrop"/>
 
-
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical"-->
-    <!--android:elevation="4dp"-->
-    <!--android:layout_weight="1.5"-->
-    <!--&gt;-->
 
         <com.truizlop.fabreveallayout.FABRevealLayout
             android:layout_width="match_parent"
@@ -57,7 +45,6 @@
                     android:id="@+id/profileImg"
                     app:border="true"
                     app:border_color="#000"
-                    android:transitionName="profileTrans"
                     app:border_width="2dp"
                     app:shadow="true" />
 
@@ -128,12 +115,6 @@
                         android:orientation="vertical"
                         android:layout_margin="14dp"
                         android:layout_weight=".7">
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="15dp"-->
-                            <!--android:layout_height="15dp"-->
-                            <!--android:src="@drawable/views"-->
-                            <!--android:layout_gravity="center"/>-->
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -312,11 +293,5 @@
             </LinearLayout>
 
         </com.truizlop.fabreveallayout.FABRevealLayout>
-
-
-
-
-
-
 
 </LinearLayout>

@@ -20,24 +20,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal">-->
-
-
-
                 <com.pkmmte.view.CircularImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:id="@+id/userImg"
                     android:layout_margin="4dp"/>
-
-
-
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -1,7 +1,10 @@
 package com.sohail.wallupwallpapers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +15,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
@@ -58,9 +64,11 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     RecyclerView featured_collection_rv,curated_collection_rv;
     Featured_collection_adapter featured_collection_adapter,curated_collection_adapter;
     MaterialSearchBar searchBar;
-    ImageView backgroundImg,aboutIcon;
-    TextView seeAllTxt,seeAllTxt2;
+    ImageView backgroundImg,aboutIcon,noInternetImg;
+    Button noInternetBtn;
+    TextView seeAllTxt,seeAllTxt2,retryTxt;
     ProgressBar progressBar,progressBar2,progressBar3;
+    FrameLayout mainFrame;
 
 
     @BindView(R.id.mainTxt)
@@ -107,6 +115,11 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         progressBar2=(ProgressBar)findViewById(R.id.progressBar2);
         progressBar3=(ProgressBar)findViewById(R.id.progressBar3);
         aboutIcon=(ImageView)findViewById(R.id.aboutIcon);
+        noInternetImg=findViewById(R.id.nointernetImg);
+        noInternetBtn=findViewById(R.id.noInternetBtn);
+        mainFrame=findViewById(R.id.mainFrame);
+        retryTxt=findViewById(R.id.retryTxt);
+        Glide.with(this).load(R.drawable.aboutme).centerCrop().into(aboutIcon);
 
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.hasFixedSize();
@@ -123,6 +136,32 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
 
         seeAllTxt=(TextView)findViewById(R.id.seeAllTxt);
         seeAllTxt2=(TextView)findViewById(R.id.seeAllTxt2);
+
+        if(!isNetworkAvailable()){
+            scrollView.setVisibility(View.GONE);
+            mainFrame.setVisibility(View.GONE);
+            noInternetImg.setVisibility(View.VISIBLE);
+            retryTxt.setVisibility(View.VISIBLE);
+            Glide.with(this).load(R.drawable.nointernet).centerCrop().into(noInternetImg);
+            noInternetBtn.setVisibility(View.VISIBLE);
+            noInternetBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(isNetworkAvailable()){
+                        scrollView.setVisibility(View.VISIBLE);
+                        mainFrame.setVisibility(View.VISIBLE);
+                        retryTxt.setVisibility(View.GONE);
+                        noInternetImg.setVisibility(View.GONE);
+                        noInternetBtn.setVisibility(View.GONE);
+                        getData();
+
+                    }else
+                        Toast.makeText(MainActivity.this,"No Internet Connection",Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }else
+            getData();
 
 
         Glide.with(getApplicationContext())
@@ -175,75 +214,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
             }
         });
 
-        //RECENT PHOTOS FIRST FETCH
-        UnsplashService service= ApiClient.getClient().create(UnsplashService.class);
-        Call<List<PhotoModel>> call=service.getRecentPhotos(API_KEY,1,PAGE_LIMIT);
-        call.enqueue(new Callback<List<PhotoModel>>() {
-            @Override
-            public void onResponse(Call<List<PhotoModel>> call, Response<List<PhotoModel>> response) {
-                List<PhotoModel> photoModelList=response.body();
-                    adapter = new Recent_photo_adapter(MainActivity.this, photoModelList);
-                    adapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(adapter);
-                    progressBar3.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
 
-            }
-
-            @Override
-            public void onFailure(Call<List<PhotoModel>> call, Throwable t) {
-
-            }
-        });
-
-//        infiniteScrollListener = new InfiniteScrollListener(gridLayoutManager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                updatePhotos(page);
-//
-//            }
-//        };
-//        recyclerView.addOnScrollListener(infiniteScrollListener);
-
-        //FEATURED COLLECTIONS FIRST FETCH
-        UnsplashService featured_collection_service=ApiClient.getClient().create(UnsplashService.class);
-        Call<List<FeaturedCollectionModel>> call_featured_collection=featured_collection_service.getFeaturedCollections(API_KEY,1,20);
-        call_featured_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
-            @Override
-            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
-                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
-                featured_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
-                featured_collection_adapter.notifyDataSetChanged();
-                featured_collection_rv.setAdapter(featured_collection_adapter);
-                progressBar.setVisibility(View.GONE);
-                featured_collection_rv.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
-
-            }
-        });
-
-        //CURATED COLLECTIONS FIRST FETCH
-        UnsplashService curated_collection_service=ApiClient.getClient().create(UnsplashService.class);
-        Call<List<FeaturedCollectionModel>> call_curated_collection=curated_collection_service.getCuratedCollections(API_KEY,1,20);
-        call_curated_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
-            @Override
-            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
-                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
-                curated_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
-                curated_collection_adapter.notifyDataSetChanged();
-                curated_collection_rv.setAdapter(curated_collection_adapter);
-                progressBar2.setVisibility(View.GONE);
-                curated_collection_rv.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
-
-            }
-        });
 
         seeAllTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     @Override
     public void onSearchConfirmed(CharSequence text) {
         searchBar.clearSuggestions();
-        Log.d("olllllllllllla", getClass().getSimpleName() + " text changed " + searchBar.getText());
         Intent i=new Intent(MainActivity.this,InfiniteScrollerActivity.class);
         i.putExtra("history",5);
         i.putExtra("headerTxt","Results for : " +searchBar.getText());
@@ -317,5 +287,76 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                 break;
         }
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void getData(){
+        //RECENT PHOTOS FIRST FETCH
+        UnsplashService service= ApiClient.getClient().create(UnsplashService.class);
+        Call<List<PhotoModel>> call=service.getRecentPhotos(API_KEY,1,PAGE_LIMIT);
+        call.enqueue(new Callback<List<PhotoModel>>() {
+            @Override
+            public void onResponse(Call<List<PhotoModel>> call, Response<List<PhotoModel>> response) {
+                List<PhotoModel> photoModelList=response.body();
+                adapter = new Recent_photo_adapter(MainActivity.this, photoModelList);
+                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
+                progressBar3.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<PhotoModel>> call, Throwable t) {
+
+            }
+        });
+
+
+        //FEATURED COLLECTIONS FIRST FETCH
+        UnsplashService featured_collection_service=ApiClient.getClient().create(UnsplashService.class);
+        Call<List<FeaturedCollectionModel>> call_featured_collection=featured_collection_service.getFeaturedCollections(API_KEY,1,20);
+        call_featured_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
+            @Override
+            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
+                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
+                featured_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
+                featured_collection_adapter.notifyDataSetChanged();
+                featured_collection_rv.setAdapter(featured_collection_adapter);
+                progressBar.setVisibility(View.GONE);
+                featured_collection_rv.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
+
+            }
+        });
+
+        //CURATED COLLECTIONS FIRST FETCH
+        UnsplashService curated_collection_service=ApiClient.getClient().create(UnsplashService.class);
+        Call<List<FeaturedCollectionModel>> call_curated_collection=curated_collection_service.getCuratedCollections(API_KEY,1,20);
+        call_curated_collection.enqueue(new Callback<List<FeaturedCollectionModel>>() {
+            @Override
+            public void onResponse(Call<List<FeaturedCollectionModel>> call, Response<List<FeaturedCollectionModel>> response) {
+                List<FeaturedCollectionModel> featuredCollectionModelList=response.body();
+                curated_collection_adapter=new Featured_collection_adapter(getApplicationContext(),featuredCollectionModelList);
+                curated_collection_adapter.notifyDataSetChanged();
+                curated_collection_rv.setAdapter(curated_collection_adapter);
+                progressBar2.setVisibility(View.GONE);
+                curated_collection_rv.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<List<FeaturedCollectionModel>> call, Throwable t) {
+
+            }
+        });
     }
 }

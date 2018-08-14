@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.sohail.wallupwallpapers.R;
 
 import mehdi.sakout.aboutpage.AboutPage;
@@ -21,17 +22,15 @@ public class AboutActivity extends AppCompatActivity {
 
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
-//                .setImage(R.drawable.dummy_image)
+                .setImage(R.drawable.aboutimageicon)
                 .addItem(versionElement)
                 .addGroup("Connect with me")
-                .addEmail("sohail778899@gmail.com")
-                .addWebsite("http://medyo.github.io/")
-                .addFacebook("the.medy")
-                .addTwitter("medyo80")
-                .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
+                .setDescription("WallUp Wallpapers \n Developed By \n Mohammed Sohail Ahmed")
+                .addEmail("sohail778899@gmail.com","Email me")
+                .addFacebook("mohd.sohail.50951","Contact me on Facebook")
+                .addTwitter("sohail7788","Contact me on Twitter")
                 .addPlayStore("com.sohail.wallupwallpapers")
-                .addGitHub("sohail77")
-                .addInstagram("sohail77")
+                .addInstagram("sohail77","Contact me on Instagram")
                 .create();
 
         setContentView(aboutPage);
