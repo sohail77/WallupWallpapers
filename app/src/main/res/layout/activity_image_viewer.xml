@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activities.ImageViewerActivity"
     android:orientation="vertical"
+    android:background="@android:color/white"
     >
 
     <ImageView
@@ -36,6 +37,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:elevation="4dp"
+                android:background="@android:color/white"
                 android:layout_weight="1.5">
 
 
