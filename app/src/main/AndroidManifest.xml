@@ -15,18 +15,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ImageViewerActivity" />
-        <activity android:name=".Activities.InfiniteScrollerActivity" />
-        <activity android:name=".Activities.UserProfileActivity" />
-        <activity android:name=".Activities.AboutActivity" />
-        <activity android:name=".Activities.OnBoarding"></activity>
+        <activity android:name=".Activities.ImageViewerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.InfiniteScrollerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.UserProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.AboutActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.OnBoarding"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
