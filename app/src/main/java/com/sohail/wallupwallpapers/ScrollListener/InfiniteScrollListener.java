@@ -12,7 +12,7 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
 
     private int minItemsBeforeNextLoad = 5;
     private int startingPage = 1;
-    private int currentPage = 1;
+    private int currentPage = 2;
     private int latestTotalItemCount = 0;
     private boolean isLoading = true;
 
