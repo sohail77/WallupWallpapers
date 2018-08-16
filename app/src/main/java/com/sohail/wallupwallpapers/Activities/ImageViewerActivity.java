@@ -53,7 +53,7 @@ import retrofit2.Response;
 public class ImageViewerActivity extends AppCompatActivity {
 
     private static final String DIR_NAME ="WallUp Wallpapers";
-    public static String API_KEY="571250bdd8ee6d1e69c98520dcc78e4505833a0273b97684358f00d19c30fed9";
+    public static String API_KEY="147e5c550ba0b4f96cbc792c659af2239b48580320111d27d7885d21c559236b";
     private static final String LOG_TAG =ImageViewerActivity.class.getSimpleName() ;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE =2 ;
     ImageView detailImg,alertImg;
