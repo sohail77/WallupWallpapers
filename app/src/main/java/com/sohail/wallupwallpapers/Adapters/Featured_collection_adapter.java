@@ -88,7 +88,9 @@ public class Featured_collection_adapter extends RecyclerView.Adapter<Featured_c
 
     @Override
     public int getItemCount() {
-        return featuredCollectionModels.size();
+        if(featuredCollectionModels!=null)
+            return featuredCollectionModels.size();
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
