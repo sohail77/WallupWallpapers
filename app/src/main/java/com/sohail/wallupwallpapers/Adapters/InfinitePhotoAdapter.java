@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.support.v4.widget.CircularProgressDrawable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.sohail.wallupwallpapers.Activities.ImageViewerActivity;
-import com.sohail.wallupwallpapers.Activities.InfiniteScrollerActivity;
 import com.sohail.wallupwallpapers.Models.PhotoModel;
 import com.sohail.wallupwallpapers.R;
 
@@ -26,9 +25,9 @@ import java.util.List;
 
 public class InfinitePhotoAdapter extends RecyclerView.Adapter<InfinitePhotoAdapter.ViewHolder> {
 
-    Context context;
-    public List<PhotoModel> recentList=new ArrayList<>();
-    CircularProgressDrawable circularProgressDrawable;
+    private Context context;
+    private List<PhotoModel> recentList=new ArrayList<>();
+    private CircularProgressDrawable circularProgressDrawable;
 
     public InfinitePhotoAdapter(Context context, List<PhotoModel> recentPhotos) {
         this.context = context;

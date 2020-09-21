@@ -42,7 +42,7 @@
         android:textSize="20sp"
         android:visibility="gone"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -98,14 +98,14 @@
                     android:theme="@style/AppTheme.WhiteAccent"/>
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/featuredCollectionrv"
                     android:layout_margin="4dp"
                     android:visibility="gone"
                     >
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
@@ -158,14 +158,14 @@
                     android:id="@+id/progressBar2"
                     android:theme="@style/AppTheme.WhiteAccent"/>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     android:id="@+id/curatedCollectionrv"
                     android:layout_margin="4dp"
                     >
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
@@ -198,18 +198,18 @@
                 android:id="@+id/progressBar3"
                 android:theme="@style/AppTheme.WhiteAccent"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recentPhotos"
                 android:visibility="gone"
                 android:layout_margin="4dp">
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <FrameLayout

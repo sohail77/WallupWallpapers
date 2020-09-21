@@ -1,10 +1,9 @@
 package com.sohail.wallupwallpapers.Activities;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.sohail.wallupwallpapers.R;
 
 import mehdi.sakout.aboutpage.AboutPage;

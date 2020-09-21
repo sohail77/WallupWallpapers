@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="190dp"
         android:id="@+id/profileCard"
@@ -103,7 +103,7 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -112,13 +112,13 @@
         android:id="@+id/progressBarUser"
         android:theme="@style/AppTheme.WhiteAccent"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/profileRv"
         android:visibility="gone"
         android:layout_margin="4dp">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

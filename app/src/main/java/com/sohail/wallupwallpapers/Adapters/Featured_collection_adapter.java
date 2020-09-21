@@ -1,15 +1,14 @@
 package com.sohail.wallupwallpapers.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.support.v4.widget.CircularProgressDrawable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sohail.wallupwallpapers.Activities.InfiniteScrollerActivity;
 import com.sohail.wallupwallpapers.Models.FeaturedCollectionModel;
-import com.sohail.wallupwallpapers.Models.PhotoModel;
 import com.sohail.wallupwallpapers.R;
 
 
@@ -28,9 +26,8 @@ import java.util.List;
 
 public class Featured_collection_adapter extends RecyclerView.Adapter<Featured_collection_adapter.ViewHolder> {
 
-    Context context;
-    List<FeaturedCollectionModel> featuredCollectionModels=new ArrayList<>();
-    CircularProgressDrawable circularProgressDrawable;
+    private Context context;
+    private List<FeaturedCollectionModel> featuredCollectionModels=new ArrayList<>();
 
     public Featured_collection_adapter(Context context, List<FeaturedCollectionModel> featuredCollectionModels) {
         this.context = context;
@@ -47,7 +44,7 @@ public class Featured_collection_adapter extends RecyclerView.Adapter<Featured_c
     @Override
     public void onBindViewHolder(@NonNull final Featured_collection_adapter.ViewHolder holder, final int position) {
 
-        circularProgressDrawable=new CircularProgressDrawable(context);
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();

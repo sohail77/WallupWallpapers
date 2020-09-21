@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.support.v4.widget.CircularProgressDrawable;
-import android.support.v7.view.menu.MenuView;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+import androidx.appcompat.view.menu.MenuView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sohail.wallupwallpapers.Activities.ImageViewerActivity;
@@ -35,8 +33,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
     private List<PhotoModel> recentPhotos=new ArrayList<>();
     private static final int TYPE_FOOTER = 1;
     private static final int TYPE_ITEM = 2;
-    public String link="https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d00f965d7f845968dd35c3590094149f&auto=format&fit=crop&w=2250&q=80";
-    CircularProgressDrawable circularProgressDrawable;
+    private CircularProgressDrawable circularProgressDrawable;
 
     public Recent_photo_adapter(Context context, List<PhotoModel> recentPhotos) {
         this.context = context;
@@ -65,6 +62,7 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
         if (holder instanceof FooterViewHolder){
             FooterViewHolder footerViewHolder=(FooterViewHolder)holder;
 
+            String link = "https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d00f965d7f845968dd35c3590094149f&auto=format&fit=crop&w=2250&q=80";
             Glide.with(context)
                     .load(link)
                     .centerCrop()
@@ -115,16 +113,6 @@ public class Recent_photo_adapter extends RecyclerView.Adapter<RecyclerView.View
             });
         }
     }
-
-//    @Override
-//    public void onBindViewHolder(@NonNull Recent_photo_adapter.Recent_photo_holder holder, int position) {
-//        PhotoModel photo=recentPhotos.get(position);
-//        Glide.with(context)
-//                .load(photo.getUrls().getImage_regular())
-//                .centerCrop()
-//                .into(holder.recentImg);
-//    }
-
 
     public void addPhotos(List<PhotoModel> newPhotos) {
         if(newPhotos!=null) {

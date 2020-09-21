@@ -23,7 +23,7 @@
             android:layout_weight="1.5"
             android:id="@+id/fablayout">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 app:backgroundTint="#212121"
